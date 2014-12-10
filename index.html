@@ -1,12 +1,22 @@
 <html>
 	<head>
 		<!--pats go here-->
-		<style type="text/css">
-		body {
-			background:url("headpats.jpg");
-		}
-		</style>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="reddit.min.js"></script>
+		<script src="imageloader.js"></script>
+		<script>
+			$(function() {
+				loadImages("headpats",$("#headpats"));
+			});
+		</script>
+		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 	<body>
+		<div id="headpats">
+		</div>
+		<audio id="bgm" autoplay>
+			<source src="dango_dango.mp3">
+			<source src="dango_dango.ogg">
+		</audio>
 	</body>
 </html>
