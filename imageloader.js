@@ -1,4 +1,4 @@
-function loadImages(subreddit, container) {
+function loadImages(subreddit, container, timeout) {
 	//Load some hot posts from the specified subreddit
 	reddit.hot(subreddit).fetch(function(res) {
 	    console.log(res.data);
@@ -23,8 +23,8 @@ function loadImages(subreddit, container) {
 				if (i > max) {
 					i = 0;
 				}
-			}, 2000);
-			//timeout
+				console.log(i);
+			}, timeout);
 		}
 	);
 }
