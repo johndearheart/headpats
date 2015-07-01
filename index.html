@@ -6,8 +6,11 @@
 		<script src="imageloader.js"></script>
 		<script>
 			$(function() {
-				//Load images from the subreddit "headpats" into #headpats with a delay of 2742ms
-				loadImages("headpats", $("#headpats"), 2742);
+				//Load images from the subreddit "headpats" into #headpats
+                var bpm = 175;
+                var beats = 4;
+				loadImages("headpats", $("#headpats"), 1/(bpm/60)*beats*1000);
+                document.getElementById("bgm").play();
                 //Enable the mute button
                 $("#mute").on("click", function () {
                     var muted = !($("#bgm").prop('muted'));
@@ -32,7 +35,7 @@
 		<div id="headpats">
 		</div>
         <div id="mute"><img src="playing.png" /></div>
-		 <audio id="bgm" autoplay loop>
+		 <audio id="bgm" loop>
 			<source src="dango_dango.mp3">
 			<source src="dango_dango.ogg">
 		</audio> 
