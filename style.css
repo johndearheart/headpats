@@ -1,14 +1,27 @@
 body {
-	padding:0px;
-	margin:0px;
+    padding: 0px;
+    margin: 0px;
 }
+
 #headpats {
-	background-color:white;
-	background-position: center center;
-	background-size:contain;
-	width:100%;
-	height:100%;
-	background-repeat:no-repeat;
-	color:white;
-	//transition:.1s ease background;
+    background-color: white;
+    background-position: center center;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+#mute {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin:20px;
+    opacity: .2;
+}
+
+#mute img {
+    width:64px;
+    height:64px;
 }
