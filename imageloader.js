@@ -11,7 +11,7 @@ function loadImages(subreddit, container, timeout) {
         }
 
         //Returns the link to the post at the specified index
-        function getPostLink(i) {
+        function getImageLink(i) {
             if (i < res.data.children.length) {
                 return res.data.children[i].data.url;
             } else {
@@ -21,23 +21,48 @@ function loadImages(subreddit, container, timeout) {
 
         //Returns true if the post at the specified index is a jpg, png, or gif
         function isImageIndex(i) {
-            var link = getPostLink(i);
+            var link = getImageLink(i);
             var imageRegex = /.+\.(jpg|png|gif)/;
             return imageRegex.test(link);
         }
 
         //Loads the image from the post at the specified index into browser memory
-        function preloadImageAtIndex(index) {
-            var image = new Image();
-            image.src = getPostLink(i);
-            //console.log("Preloading Image " + i);
+        function preloadImage(i) {
+            var thumbnail = new Image();
+            thumbnail.src = getThumbnailLink(i);
+			var image = new Image();
+            image.src = getImageLink(i);
+			console.log("Preloaded image " + i);
         }
 
-        //Loads the image at the specified link into the global display container
-        function displayImage(link) {
+        //Renders the image at the specified link into the global display container
+        function renderImage(link) {
             container.css("background-image", 'url(' + link + ')');
             //console.log("Loading Image At " + link);
         }
+		
+		//Progressively displays the image at the given index
+		function loadImage(i) {
+			//Find the full link
+            var image = new Image();
+			var imageLink = getImageLink(i);
+			//Remember to display it once it's fully loaded
+			image.onload = function () {
+				console.log("Fully loaded image " + i);
+				renderImage(imageLink);
+			};
+			//Start loading the image
+            image.src = imageLink;
+			window.setTimeout(function () {
+				image.src = "";
+				image = null;
+			}, timeout);
+			if (!image.complete) {
+				//Render the thumbnail no matter what
+				renderImage(getThumbnailLink(i));
+				console.log("Showed thumbnail for image " + i);
+			}
+		}
 
         //Returns the index of the next image post after the given index
         function nextImageIndexAfter(i) {
@@ -54,21 +79,18 @@ function loadImages(subreddit, container, timeout) {
             return i;
         }
 
-        //Load the first image
+        //Find the first image
         i = nextImageIndexAfter(i);
-        displayImage(getPostLink(i));
-
-        //Preload the next image
+		loadImage(i);
         i = nextImageIndexAfter(i);
-        preloadImageAtIndex(i);
-        //Load all subsequent images
+        preloadImage(i);
+        //Load all images
         window.setInterval(function () {
             //Load the current image
-            displayImage(getThumbnailLink(i));
-            displayImage(getPostLink(i));
+            loadImage(i);
             //Preload the next image
             i = nextImageIndexAfter(i);
-            preloadImageAtIndex(i);
+            preloadImage(i);
         }, timeout);
     });
 }
