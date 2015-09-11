@@ -6,6 +6,7 @@ body {
 }
 
 #headpats {
+    display:block;
     background-color: white;
     background-position: center center;
     background-size: contain;

@@ -1,47 +1,51 @@
 <html>
-	<head>
-		<!--pats go here-->
-		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script src="reddit.min.js"></script>
-		<script src="imageloader.js"></script>
-		<script>
-			$(function() {
-				//Load images from the subreddit "headpats" into #headpats
-                var bpm = 175;
-                var beats = 8;
-				loadImages("headpats", $("#headpats"), 1/(bpm/60)*beats*1000);
-                document.getElementById("bgm").play();
-                //Enable the mute button
-                $("#mute").on("click", function () {
-                    var muted = !($("#bgm").prop('muted'));
-                    var image = "";
-                    if (muted) {
-                        image = "muted";
-                    } else {
-                        image = "playing";
-                    }
-                    $("#bgm").prop('muted', muted);
-                    $("#mute img").prop("src", image + ".png");
-                });
-			});
-		</script>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-        <link rel="icon" href="favicon_16.png" type="image/png" sizes="16x16">
-        <link rel="icon" href="favicon_32.png" type="image/png" sizes="32x32">
-        <link rel="icon" href="favicon_128.png" type="image/png" sizes="128x128">
-		
-		<meta charset="utf-8">
-		<title>Headpat Me!</title>
-		<meta name="description" content="A slideshow of adorable anime characters enjoying headpats" />
-	</head>
-	<body>
-		<!--Pats only go here if it's *that* sort of show-->
-		<div id="headpats">
-		</div>
-        <div id="mute"><img src="playing.png" /></div>
-		 <audio id="bgm" loop>
-			<source src="dango_dango.mp3">
-			<source src="dango_dango.ogg">
-		</audio>
-	</body>
+
+<head>
+    <!--pats go here-->
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="reddit.min.js"></script>
+    <script src="imageloader.js"></script>
+    <script>
+        $(function () {
+            //Load images from the subreddit "headpats" into #headpats
+            var bpm = 175;
+            var beats = 8;
+            loadImages("headpats", $("#headpats"), 1 / (bpm / 60) * beats * 1000);
+            document.getElementById("bgm").play();
+            //Enable the mute button
+            $("#mute").on("click", function () {
+                var muted = !($("#bgm").prop('muted'));
+                var image = "";
+                if (muted) {
+                    image = "muted";
+                } else {
+                    image = "playing";
+                }
+                $("#bgm").prop('muted', muted);
+                $("#mute img").prop("src", image + ".png");
+            });
+        });
+    </script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="icon" href="favicon_16.png" type="image/png" sizes="16x16">
+    <link rel="icon" href="favicon_32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="favicon_128.png" type="image/png" sizes="128x128">
+
+    <meta charset="utf-8">
+    <title>Headpat Me!</title>
+    <meta name="description" content="A slideshow of adorable anime characters enjoying headpats" />
+</head>
+
+<body>
+    <!--Pats only go here if it's *that* sort of show-->
+    <a id="headpats" target="_blank">
+    </a>
+    <div id="mute"><img src="playing.png" />
+    </div>
+    <audio id="bgm" loop>
+        <source src="dango_dango.mp3">
+            <source src="dango_dango.ogg">
+    </audio>
+</body>
+
 </html>

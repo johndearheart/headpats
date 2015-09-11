@@ -19,6 +19,14 @@ function loadImages(subreddit, container, timeout) {
             }
         }
 
+        //sets the container's HREF to the URL of the post at the specified index
+        function setPostLink(i) {
+            if (i < res.data.children.length) {
+                container.attr("href", "https://www.reddit.com" + res.data.children[i].data.permalink);
+                //console.log(res.data.children[i].data.permalink);
+            }
+        }
+
         //Returns true if the post at the specified index is a jpg, png, or gif
         function isImageIndex(i) {
             var link = getImageLink(i);
@@ -30,9 +38,9 @@ function loadImages(subreddit, container, timeout) {
         function preloadImage(i) {
             var thumbnail = new Image();
             thumbnail.src = getThumbnailLink(i);
-			var image = new Image();
+            var image = new Image();
             image.src = getImageLink(i);
-			console.log("Preloaded image " + i);
+            //console.log("Preloaded image " + i);
         }
 
         //Renders the image at the specified link into the global display container
@@ -40,29 +48,29 @@ function loadImages(subreddit, container, timeout) {
             container.css("background-image", 'url(' + link + ')');
             //console.log("Loading Image At " + link);
         }
-		
-		//Progressively displays the image at the given index
-		function loadImage(i) {
-			//Find the full link
+
+        //Progressively displays the image at the given index
+        function loadImage(i) {
+            //Find the full link
             var image = new Image();
-			var imageLink = getImageLink(i);
-			//Remember to display it once it's fully loaded
-			image.onload = function () {
-				console.log("Fully loaded image " + i);
-				renderImage(imageLink);
-			};
-			//Start loading the image
+            var imageLink = getImageLink(i);
+            //Remember to display it once it's fully loaded
+            image.onload = function () {
+                //console.log("Fully loaded image " + i);
+                renderImage(imageLink);
+            };
+            //Start loading the image
             image.src = imageLink;
-			window.setTimeout(function () {
-				image.src = "";
-				image = null;
-			}, timeout);
-			if (!image.complete) {
-				//Render the thumbnail no matter what
-				renderImage(getThumbnailLink(i));
-				console.log("Showed thumbnail for image " + i);
-			}
-		}
+            window.setTimeout(function () {
+                image.src = "";
+                image = null;
+            }, timeout);
+            if (!image.complete) {
+                //Render the thumbnail no matter what
+                renderImage(getThumbnailLink(i));
+                //console.log("Showed thumbnail for image " + i);
+            }
+        }
 
         //Returns the index of the next image post after the given index
         function nextImageIndexAfter(i) {
@@ -81,13 +89,15 @@ function loadImages(subreddit, container, timeout) {
 
         //Find the first image
         i = nextImageIndexAfter(i);
-		loadImage(i);
+        loadImage(i);
+        setPostLink(i);
         i = nextImageIndexAfter(i);
         preloadImage(i);
         //Load all images
         window.setInterval(function () {
             //Load the current image
             loadImage(i);
+            setPostLink(i);
             //Preload the next image
             i = nextImageIndexAfter(i);
             preloadImage(i);
